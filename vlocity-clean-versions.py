@@ -2,6 +2,7 @@ import argparse
 import sys
 from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query
 import os
+from bin.bcolors import bcolors as clr
 
 
 def check_dir():
@@ -11,30 +12,34 @@ def check_dir():
 
 def add_args():
     parser = argparse.ArgumentParser(
-        prog='VlocityCleanVersions',
+        prog='Vlocity Clean Versions',
         description='Clean unused versions from Org and keep -n only',
     )
 
-    parser.add_argument("-u", "--user", help="Target Org username or sfdx alias", required=True)
-    parser.add_argument("-t", "--type", help="which elements will you remove the version, \'os\' \'ip\' \'all\' ",
+    parser.add_argument("-u", "--user",
+                        help="Target Org username or sfdx alias",
                         required=True)
-    parser.add_argument("-c", "--count", help="how many versions to leave on target Org", required=True)
+    parser.add_argument("-t", "--type",
+                        help="which elements will you remove the version, \'os\' \'ip\' \'all\' ",
+                        required=True)
+    parser.add_argument("-c", "--count",
+                        help="how many versions to leave on target Org",
+                        required=True)
 
     return parser
 
 
 def get_args(parser):
-    result = {}
+    result_args = {}
     args = parser.parse_args()
-    result['user'] = args.user
-    result['type'] = args.type
-    result['count'] = args.count
+    result_args['user'] = args.user
+    result_args['type'] = args.type
+    result_args['count'] = args.count
 
-    return result
+    return result_args
 
 
 def main():
-
     parser = add_args()
     args = get_args(parser)  # get arguments from user command input
     check_dir()  # check directory where csv results will be saved
