@@ -2,6 +2,7 @@ import argparse
 import sys
 from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query
 import os
+from bin.bcolors import bcolors as clr
 
 
 def check_dir():
