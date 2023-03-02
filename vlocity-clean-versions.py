@@ -23,7 +23,7 @@ def add_args():
                         help="which elements will you remove the version, \'os\' \'ip\' \'all\' ",
                         required=True)
     parser.add_argument("-c", "--count",
-                        help="how many versions to leave on target Org",
+                        help="how many versions to leave on target Org excluding Activated Version",
                         required=True)
 
     return parser
