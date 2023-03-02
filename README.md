@@ -43,11 +43,10 @@ python vlocity-clean-versions.py -h
 >> Clean unused versions from Org and keep -n only
 >> 
 >> options:
->>   -h, --help            show this help message and exit
->>   -u USER, --user USER  Target Org username or sfdx alias
->>   -t TYPE, --type TYPE  which elements will you remove the version, 'os' 'ip' 'all'
->>   -c COUNT, --count COUNT
->>                         how many versions to leave on target Org
+>>   -h, --help                 show this help message and exit
+>>   -u USER, --user USER       Target Org username or sfdx alias
+>>   -t TYPE, --type TYPE       which elements will you remove the version, 'os' 'ip' 'all'
+>>   -c COUNT, --count COUNT    how many versions to leave on target Org excluding Activated Version
 ```
 
 ## Exampple
