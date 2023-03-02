@@ -48,7 +48,7 @@ def main():
     reformat_csv_result.reformat(args)  # analyse which versions leave to delete
     get_omnielements.retrieve_data(args)  # get omniprocesselements records from target Org
 
-    # delete_records.delete(args)  # delete records from csv files with IDs
+    delete_records.delete(args)  # delete records from csv files with IDs
 
     print(clr.OKGREEN + ">> Deleting Versions from Org ended successful" + clr.ENDC)
 
