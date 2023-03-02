@@ -15,14 +15,20 @@ def leave_n_versions(df, n_rows):
         return df[['Id']]
 
 
+def get_file(file_name):
+    try:
+        omniprocess = pd.read_csv("./bin/temp/" + file_name)
+    except FileNotFoundError:
+        sys.stderr.write(f'There is no file \'/temp/{file_name}\' with Omniprocess records\n')
+        sys.exit()
+
+    return omniprocess
+
+
 def reformat(args):
     N_VERSIONS_TO_LEAVE = int(args['count'])
 
-    try:
-        omniprocess = pd.read_csv("./temp/omniprocess_records.csv")
-    except FileNotFoundError:
-        sys.stderr.write('There is no file \'/temp/omniprocess_records.csv\' with Omniprocess records\n')
-        sys.exit()
+    omniprocess = get_file("omniprocess_records.csv")
 
     for col in ['Name', 'Type', 'VersionNumber', 'IsActive']:
         if col not in omniprocess:
@@ -43,7 +49,7 @@ def reformat(args):
         if not isinstance(df_temp, type(None)):
             result_df = pd.concat([result_df, df_temp], ignore_index=True)
 
-    result_df.to_csv(os.path.join("./", "temp", "omniprocess_records.csv"), index=False)
+    result_df.to_csv(os.path.join("./", "bin", "temp", "omniprocess_records_ids.csv"), index=False)
 
 
 if __name__ == "__main__":
