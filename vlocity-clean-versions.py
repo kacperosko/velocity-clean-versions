@@ -1,6 +1,6 @@
 import argparse
 import sys
-from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query
+from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query, delete_records
 import os
 from bin.bcolors import bcolors as clr
 
@@ -47,6 +47,8 @@ def main():
     get_omniprocesses.retrieve_data(args)  # get omniprocess records from target Org
     reformat_csv_result.reformat(args)  # analyse which versions leave to delete
     get_omnielements.retrieve_data(args)  # get omniprocesselements records from target Org
+
+    # delete_records.delete(args)  # delete records from csv files with IDs
 
     print(clr.OKGREEN + ">> Deleting Versions from Org ended successful" + clr.ENDC)
 
