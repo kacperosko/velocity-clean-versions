@@ -16,4 +16,4 @@ def retrieve_data(args):
 
 
 if __name__ == "__main__":
-    get_data_from_org(args)
+    get_data_from_org({})
