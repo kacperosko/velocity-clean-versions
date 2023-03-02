@@ -1,10 +1,10 @@
 import pandas as pd
 import os
+from bin.reformat_csv_result import get_file
+from bin.run_sf_query import run_query
 
 
 def retrieve_data(args):
-    from bin.reformat_csv_result import get_file
-    from bin.run_sf_query import run_query
     omniprocess = get_file("omniprocess_records_ids.csv")
     omniprocess_ids = tuple(omniprocess['Id'].values.tolist())
 

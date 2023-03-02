@@ -1,6 +1,12 @@
 import argparse
 import sys
-from bin import get_data_from_org, get_omnielements, reformat_csv_result
+from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query
+import os
+
+
+def check_dir():
+    if not os.path.exists("bin/temp"):
+        os.mkdir("bin/temp")
 
 
 def add_args():
@@ -30,11 +36,14 @@ def get_args(parser):
 def main():
 
     parser = add_args()
-    args = get_args(parser)
+    args = get_args(parser)  # get arguments from user command input
+    check_dir()  # check directory where csv results will be saved
 
-    get_data_from_org.retrieve_data(args)
-    reformat_csv_result.reformat(args)
-    get_omnielements.retrieve_data(args)
+    get_omniprocesses.retrieve_data(args)  # get omniprocess records from target Org
+    reformat_csv_result.reformat(args)  # analyse which versions leave to delete
+    get_omnielements.retrieve_data(args)  # get omniprocesselements records from target Org
+
+    print(clr.OKGREEN + ">> Deleting Versions from Org ended successful" + clr.ENDC)
 
 
 if __name__ == '__main__':

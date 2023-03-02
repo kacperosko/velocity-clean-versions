@@ -1,6 +1,7 @@
 import pandas as pd
 import sys
 import os
+from bin.bcolors import bcolors as clr
 
 
 def leave_n_versions(df, n_rows):
@@ -26,6 +27,7 @@ def get_file(file_name):
 
 
 def reformat(args):
+    print(clr.OKBLUE + ">> Analysing versions to delete" + clr.ENDC)
     N_VERSIONS_TO_LEAVE = int(args['count'])
 
     omniprocess = get_file("omniprocess_records.csv")
@@ -50,6 +52,8 @@ def reformat(args):
             result_df = pd.concat([result_df, df_temp], ignore_index=True)
 
     result_df.to_csv(os.path.join("./", "bin", "temp", "omniprocess_records_ids.csv"), index=False)
+
+    print(clr.OKGREEN + ">> Analyse ended successfully" + clr.ENDC)
 
 
 if __name__ == "__main__":
