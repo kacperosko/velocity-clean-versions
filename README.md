@@ -22,12 +22,12 @@ This is unofficial module to clean Omniscripts and Integration Procedures versio
 
 Download repository and install requirements
 ```sh
-git clone https://github.com/kacperosko/velocity-clean-versions.git
-cd velocity-clean-versions
+git clone https://github.com/kacperosko/vlocity-clean-versions.git
+cd vlocity-clean-versions
 pip install -r requirements.txt 
 ```
 
-Run command inside **velocity-clean-versions** folder
+Run command inside **vlocity-clean-versions** folder
 
 ```sh
 python vlocity-clean-versions.py --user <<user>> --type <<type>> --count <<count>>
