@@ -1,6 +1,6 @@
 import argparse
 import sys
-from bin import get_data_from_org
+from bin import get_data_from_org, get_omnielements, reformat_csv_result
 
 
 def add_args():
@@ -33,6 +33,8 @@ def main():
     args = get_args(parser)
 
     get_data_from_org.retrieve_data(args)
+    reformat_csv_result.reformat(args)
+    get_omnielements.retrieve_data(args)
 
 
 if __name__ == '__main__':
