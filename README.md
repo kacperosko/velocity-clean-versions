@@ -27,7 +27,7 @@ cd velocity-clean-versions
 pip install -r requirements.txt 
 ```
 
-Run command
+Run command inside **velocity-clean-versions** folder
 
 ```sh
 python vlocity-clean-versions.py --user <<user>> --type <<type>> --count <<count>>
@@ -49,6 +49,16 @@ python vlocity-clean-versions.py -h
 >>   -c COUNT, --count COUNT
 >>                         how many versions to leave on target Org
 ```
+
+## Exampple
+```sh
+python vlocity-clean-versions.py -u username@salesforce.com -t all -c 4
+```
+
+```sh
+python vlocity-clean-versions.py --user test.qa@salesforce.com --type ip --count 1
+```
+
 
 ## License
 
