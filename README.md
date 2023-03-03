@@ -11,9 +11,11 @@ This is unofficial module to clean Omniscripts and Integration Procedures versio
 
 ## Requirement
 
-**Vlocity Versions Clean** using:
+**Vlocity Versions Clean** is using:
 
 - Python 3.10
+- [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli)
+- Authorized Org
 
 
 ## Installation
@@ -30,13 +32,13 @@ pip install -r requirements.txt
 Run command inside **vlocity-clean-versions** folder
 
 ```sh
-python vlocity-clean-versions.py --user <<user>> --type <<type>> --count <<count>>
+python vlocity-clean-versions --user <<user>> --type <<type>> --count <<count>>
 ```
 
 ## Usage
 
 ```sh
-python vlocity-clean-versions.py -h
+python vlocity-clean-versions -h
               
 >> usage: Vlocity Clean Versions [-h] -u USER -t TYPE -c COUNT
 >> 
@@ -51,11 +53,11 @@ python vlocity-clean-versions.py -h
 
 ## Exampple
 ```sh
-python vlocity-clean-versions.py -u username@salesforce.com -t all -c 4
+python vlocity-clean-versions -u username@salesforce.com -t all -c 4
 ```
 
 ```sh
-python vlocity-clean-versions.py --user test.qa@salesforce.com --type ip --count 1
+python vlocity-clean-versions --user test.qa@salesforce.com --type ip --count 1
 ```
 
 
