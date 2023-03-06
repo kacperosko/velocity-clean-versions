@@ -28,7 +28,17 @@ def get_file(file_name):
 
 def reformat(args):
     print(clr.OKBLUE + ">> Analysing versions to delete" + clr.ENDC)
-    N_VERSIONS_TO_LEAVE = int(args['count'])
+    try:
+        N_VERSIONS_TO_LEAVE = int(args['count'])
+    except ValueError:
+        sys.stderr.write(
+            f' \'count\' value must be a number greater than or equal to 0')
+        sys.exit()
+
+    if N_VERSIONS_TO_LEAVE < 0:
+        sys.stderr.write(
+            f'\'count\' value cannot be greater than or equal to 0')
+        sys.exit()
 
     omniprocess = get_file("omniprocess_records.csv")
 

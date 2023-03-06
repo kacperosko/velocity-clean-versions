@@ -5,10 +5,13 @@ from bin.run_sf_query import run_query
 def retrieve_data(args):
     if args['type'] == 'all':
         OMNIPROCESS_TYPE = '\'OmniScript\', \'Integration Procedure\''
-    if args['type'] == 'os':
+    elif args['type'] == 'os':
         OMNIPROCESS_TYPE = '\'OmniScript\''
-    if args['type'] == 'ip':
+    elif args['type'] == 'ip':
         OMNIPROCESS_TYPE = '\'Integration Procedure\''
+    else:
+        sys.stderr.write(f'invalid value for \'type\': {args[type]}')
+        sys.exit()
 
     QUERY = f"SELECT Id, Name, Type, VersionNumber, IsActive FROM Omniprocess WHERE OmniProcessType IN ({OMNIPROCESS_TYPE})"
 
