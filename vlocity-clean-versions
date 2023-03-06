@@ -19,13 +19,14 @@ def add_args():
     )
 
     parser.add_argument("-u", "--user",
-                        help="Target Org username or sfdx alias",
+                        help="Target Org username or sfdx alias authorized on computer",
                         required=True)
     parser.add_argument("-t", "--type",
-                        help="which elements will you remove the version, \'os\' \'ip\' \'all\' ",
+                        choices=['os', 'ip', 'all'],
+                        help="Which element's versions to delete (\'os\' \'ip\' \'all\')",
                         required=True)
     parser.add_argument("-c", "--count",
-                        help="how many versions to leave on target Org excluding Activated Version",
+                        help="Number greater greater than or equal to 0 of versions to leave on target Org excluding Activated Version",
                         required=True)
 
     return parser
