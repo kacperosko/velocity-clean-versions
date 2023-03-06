@@ -23,7 +23,7 @@ This is unofficial module to clean Omniscripts and Integration Procedures versio
 
 
 Download repository and install requirements
-```sh
+```commandline
 git clone https://github.com/kacperosko/vlocity-clean-versions.git
 cd vlocity-clean-versions
 pip install -r requirements.txt 
@@ -31,13 +31,13 @@ pip install -r requirements.txt
 
 Run command inside **vlocity-clean-versions** folder
 
-```sh
-python vlocity-clean-versions --user <<user>> --type <<type>> --count <<count>>
+```commandline
+python vlocity-clean-versions --user <user> --type <type> --count <count>
 ```
 
 ## Usage
 
-```sh
+```commandline
 python vlocity-clean-versions -h
               
 >> usage: Vlocity Clean Versions [-h] -u USER -t TYPE -c COUNT
@@ -45,10 +45,10 @@ python vlocity-clean-versions -h
 >> Clean unused versions from Org and keep -n only
 >> 
 >> options:
->>   -h, --help                 show this help message and exit
->>   -u USER, --user USER       Target Org username or sfdx alias
->>   -t TYPE, --type TYPE       which elements will you remove the version, 'os' 'ip' 'all'
->>   -c COUNT, --count COUNT    how many versions to leave on target Org excluding Activated Version
+  -h, --help                            show this help message and exit
+  -u USER, --user USER                  Target Org username or sfdx alias authorized on computer
+  -t {os,ip,all}, --type {os,ip,all}    Which element's versions to delete ('os' 'ip' 'all')
+  -c COUNT, --count COUNT               Number greater greater than or equal to 0 of versions to leave on target Org excluding Activated Version
 ```
 
 ## Exampple

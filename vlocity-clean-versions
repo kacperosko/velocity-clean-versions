@@ -19,13 +19,14 @@ def add_args():
     )
 
     parser.add_argument("-u", "--user",
-                        help="Target Org username or sfdx alias",
+                        help="Target Org username or sfdx alias authorized on computer",
                         required=True)
     parser.add_argument("-t", "--type",
-                        help="which elements will you remove the version, \'os\' \'ip\' \'all\' ",
+                        choices=['os', 'ip', 'all'],
+                        help="Which element's versions to delete (\'os\' \'ip\' \'all\')",
                         required=True)
     parser.add_argument("-c", "--count",
-                        help="how many versions to leave on target Org excluding Activated Version",
+                        help="Number greater greater than or equal to 0 of versions to leave on target Org excluding Activated Version",
                         required=True)
 
     return parser
@@ -46,11 +47,13 @@ def main():
     args = get_args(parser)  # get arguments from user command input
     check_dir()  # check directory where csv results will be saved
 
-    get_omniprocesses.retrieve_data(args)  # get omniprocess records from target Org
-    reformat_csv_result.reformat(args)  # analyse which versions leave to delete
-    get_omnielements.retrieve_data(args)  # get omniprocesselements records from target Org
-
-    delete_records.delete(args)  # delete records from csv files with IDs
+    get_omniprocesses.retrieve_data(user=args['user'], element_type=args['type'])  # get omniprocess records from target Org
+    reformat_csv_result.reformat(count=args['count'])  # analyse which versions leave to delete
+    if reformat_csv_result.OMNIPROCESS_RECORDS_LEN > 0:
+        get_omnielements.retrieve_data(user=args['user'])  # get omniprocesselements records from target Org
+        delete_records.delete(user=args['user'])  # delete records from csv files with IDs
+    else:
+        print(clr.OKBLUE + ">> No versions to delete" + clr.ENDC)
 
     print(clr.OKGREEN + ">> Deleting Versions from Org ended successful" + clr.ENDC)
 
