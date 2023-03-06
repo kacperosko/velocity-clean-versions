@@ -32,7 +32,7 @@ pip install -r requirements.txt
 Run command inside **vlocity-clean-versions** folder
 
 ```commandline
-python vlocity-clean-versions --user <<user>> --type <<type>> --count <<count>>
+python vlocity-clean-versions --user <user> --type <type> --count <count>
 ```
 
 ## Usage
