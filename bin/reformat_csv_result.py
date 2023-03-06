@@ -20,24 +20,24 @@ def get_file(file_name):
     try:
         omniprocess = pd.read_csv("./bin/temp/" + file_name)
     except FileNotFoundError:
-        sys.stderr.write(f'There is no file \'/temp/{file_name}\' with Omniprocess records\n')
+        print(clr.FAIL + f'There is no file \'/temp/{file_name}\' with Omniprocess records\n' + clr.ENDC)
         sys.exit()
 
     return omniprocess
 
 
-def reformat(args):
+def reformat(count=None):
     print(clr.OKBLUE + ">> Analysing versions to delete" + clr.ENDC)
     try:
-        N_VERSIONS_TO_LEAVE = int(args['count'])
+        N_VERSIONS_TO_LEAVE = int(count)
     except ValueError:
-        sys.stderr.write(
-            f' \'count\' value must be a number greater than or equal to 0')
+        print(clr.FAIL +
+              f' \'count\' value must be a number greater than or equal to 0' + clr.ENDC)
         sys.exit()
 
     if N_VERSIONS_TO_LEAVE < 0:
-        sys.stderr.write(
-            f'\'count\' value cannot be greater than or equal to 0')
+        print(clr.FAIL +
+              f'\'count\' value must be greater than or equal to 0' + clr.ENDC)
         sys.exit()
 
     omniprocess = get_file("omniprocess_records.csv")

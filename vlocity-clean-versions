@@ -47,11 +47,11 @@ def main():
     args = get_args(parser)  # get arguments from user command input
     check_dir()  # check directory where csv results will be saved
 
-    get_omniprocesses.retrieve_data(args)  # get omniprocess records from target Org
-    reformat_csv_result.reformat(args)  # analyse which versions leave to delete
-    get_omnielements.retrieve_data(args)  # get omniprocesselements records from target Org
+    get_omniprocesses.retrieve_data(user=args['user'], element_type=args['type'])  # get omniprocess records from target Org
+    reformat_csv_result.reformat(count=args['count'])  # analyse which versions leave to delete
+    get_omnielements.retrieve_data(user=args['user'])  # get omniprocesselements records from target Org
 
-    delete_records.delete(args)  # delete records from csv files with IDs
+    delete_records.delete(user=args['user'])  # delete records from csv files with IDs
 
     print(clr.OKGREEN + ">> Deleting Versions from Org ended successful" + clr.ENDC)
 
