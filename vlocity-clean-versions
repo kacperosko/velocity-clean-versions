@@ -49,9 +49,11 @@ def main():
 
     get_omniprocesses.retrieve_data(user=args['user'], element_type=args['type'])  # get omniprocess records from target Org
     reformat_csv_result.reformat(count=args['count'])  # analyse which versions leave to delete
-    get_omnielements.retrieve_data(user=args['user'])  # get omniprocesselements records from target Org
-
-    delete_records.delete(user=args['user'])  # delete records from csv files with IDs
+    if reformat_csv_result.OMNIPROCESS_RECORDS_LEN > 0:
+        get_omnielements.retrieve_data(user=args['user'])  # get omniprocesselements records from target Org
+        delete_records.delete(user=args['user'])  # delete records from csv files with IDs
+    else:
+        print(clr.OKBLUE + ">> No versions to delete" + clr.ENDC)
 
     print(clr.OKGREEN + ">> Deleting Versions from Org ended successful" + clr.ENDC)
 

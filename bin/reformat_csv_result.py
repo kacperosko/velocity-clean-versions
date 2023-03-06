@@ -3,6 +3,8 @@ import sys
 import os
 from bin.bcolors import bcolors as clr
 
+OMNIPROCESS_RECORDS_LEN = None
+
 
 def leave_n_versions(df, n_rows):
     df = df.sort_values(by=['VersionNumber'], ascending=False)  # sort dataframe to get highest version on top
@@ -40,30 +42,37 @@ def reformat(count=None):
               f'\'count\' value must be greater than or equal to 0' + clr.ENDC)
         sys.exit()
 
-    omniprocess = get_file("omniprocess_records.csv")
+    omniprocess_df = get_file("omniprocess_records.csv")
 
     for col in ['Name', 'Type', 'VersionNumber', 'IsActive']:
-        if col not in omniprocess:
+        if col not in omniprocess_df:
             sys.stderr.write(
                 f'There is no column \'{col}\' in file \'/temp/omniprocess_records.csv\' with Omniprocess records\n')
             sys.exit()
 
-    omniprocess['Name'] = omniprocess['Type'] + omniprocess['Name']
+    if len(omniprocess_df.index) == 0:
+        print(clr.FAIL +
+              f'There\'s no OmniProcess records' + clr.ENDC)
+        sys.exit()
 
-    omniprocess_name = pd.DataFrame.copy(omniprocess)
-    omniprocess_name = omniprocess_name['Name'].unique()  # creates array with names
+    omniprocess_df['Name'] = omniprocess_df['Type'] + omniprocess_df['Name']
+
+    omniprocess_name_df = pd.DataFrame.copy(omniprocess_df)
+    omniprocess_name_df = omniprocess_name_df['Name'].unique()  # creates array with names
 
     result_df = pd.DataFrame(columns=['Id'])  # create dataframe with Id's to delete from Org
 
-    for name in omniprocess_name:
-        df_temp = leave_n_versions(omniprocess[omniprocess['Name'] == name],
+    for name in omniprocess_name_df:
+        temp_df = leave_n_versions(omniprocess_df[omniprocess_df['Name'] == name],
                                    N_VERSIONS_TO_LEAVE)  # give dataframe with one element only and all its versions
-        if not isinstance(df_temp, type(None)):
-            result_df = pd.concat([result_df, df_temp], ignore_index=True)
+        if not isinstance(temp_df, type(None)):
+            result_df = pd.concat([result_df, temp_df], ignore_index=True)
 
     result_df.to_csv(os.path.join("./", "bin", "temp", "omniprocess_records_ids.csv"), index=False)
 
-    print(clr.OKGREEN + ">> Analyse ended successfully" + clr.ENDC)
+    global OMNIPROCESS_RECORDS_LEN
+    OMNIPROCESS_RECORDS_LEN = len(result_df.index)
+    print(clr.OKGREEN + f">> Analyse ended successfully ({OMNIPROCESS_RECORDS_LEN} verions to delete)" + clr.ENDC)
 
 
 if __name__ == "__main__":
