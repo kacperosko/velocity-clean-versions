@@ -1,7 +1,7 @@
 import pandas as pd
 import sys
 import os
-from bin.bcolors import bcolors as clr
+from bin.printcolors import PrintColors as clr
 
 OMNIPROCESS_RECORDS_LEN = None
 

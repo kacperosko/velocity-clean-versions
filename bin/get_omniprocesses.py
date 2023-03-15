@@ -1,6 +1,6 @@
 import os
 from bin.run_sf_query import run_query
-from bin.bcolors import bcolors as clr
+from bin.printcolors import PrintColors as clr
 
 
 def retrieve_data(user=None, element_type=None):

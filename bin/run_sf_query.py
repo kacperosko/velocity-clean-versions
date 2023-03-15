@@ -1,5 +1,5 @@
 import os
-from bin.bcolors import bcolors as clr
+from bin.printcolors import PrintColors as clr
 
 
 def run_query(query="None", user="", result_path="result.csv"):
