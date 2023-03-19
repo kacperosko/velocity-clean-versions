@@ -62,7 +62,7 @@ class SalesforceCommands:
     def delete_bulk(self, s_object: str, dataframe: pd_frame.DataFrame = None, path: str = "generate_from_temp",
                     batch_size: int = 10000, use_serial: bool = True) -> bool:
         """
-        Function require sObject type which should be deleted and data with record's ID to delete (Dataframe or path to CSV file).
+        Function require sObject type which should be deleted and data with record's ID to delete (Dataframe or path to CSV file, both must have 'Id' column).
         If source is not provided, function will take CSV from get_bulk function for provided sObject.
 
         :param s_object:
@@ -119,6 +119,6 @@ if __name__ == '__main__':
         security_token='O5FwHw3jPwFHEdePKfiZ5GMN',
         domain="test"
     )
-    df = sf.get_bulk(query="SELECT Id, Name FROM Account WHERE Id ='0013H00000XYAX8QAP'", s_object="Account")
+    df = sf.get_bulk(query="SELECT Id, Name FROM Account WHERE Id ='0013H00000lUXOyQAO'", s_object="Account")
     sf.delete_bulk(s_object="Account")
     # sf.get_bulk(query="SELECT Id, Name FROM OmniProcess", s_object="OmniProcess")
