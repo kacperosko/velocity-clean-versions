@@ -1,13 +1,13 @@
 # Vlocity Versions Clean
 
-This is unofficial module to clean Omniscripts and Integration Procedures versions
+This is unofficial module to clean Omniscripts and Integration Procedures versions from provided Salesforce Org
 
 
 ## Features
 
-- Select which object clean OmniScript or Integration Procedure (or You can do all 😎)
+- Select which objects You want to clean, OmniScripts or Integration Procedures (or You can do all 😎)
 - Define how many version You want to leave
-- Define target Org to use it in deploy process
+- Define target Org
 
 ## Requirement
 
@@ -20,8 +20,6 @@ This is unofficial module to clean Omniscripts and Integration Procedures versio
 
 ## Installation
 
-
-
 Download repository and install requirements
 ```commandline
 git clone https://github.com/kacperosko/vlocity-clean-versions.git
@@ -32,7 +30,7 @@ pip install -r requirements.txt
 Run command inside **vlocity-clean-versions** folder
 
 ```commandline
-python vlocity-clean-versions --user <user> --type <type> --count <count>
+python vlocity-clean-versions --username USERNAME --password PASSWORD --token TOKEN --domain DOMAIN --object OBJECT --count COUNT
 ```
 
 ## Usage
@@ -45,19 +43,35 @@ python vlocity-clean-versions -h
 >> Clean unused versions from Org and keep -n only
 >> 
 >> options:
-  -h, --help                            show this help message and exit
-  -u USER, --user USER                  Target Org username or sfdx alias authorized on computer
-  -t {os,ip,all}, --type {os,ip,all}    Which element's versions to delete ('os' 'ip' 'all')
-  -c COUNT, --count COUNT               Number greater greater than or equal to 0 of versions to leave on target Org excluding Activated Version
+    -h, --help            show this help message and exit
+    
+    -u USERNAME, --username USERNAME
+                        Username the user you want to log in to the selected Org
+                        
+    -p PASSWORD, --password PASSWORD
+                        Password the user you want to log in to the selected Org
+                        
+    -t TOKEN, --token TOKEN
+                        Security Token of the user you want to log in with
+                        
+    -d DOMAIN, --domain DOMAIN
+                        Domain of selected Org. Provide 'test' if You try to log in to sandbox
+    
+    -o {os,ip,all}, --object {os,ip,all}
+                        Which objects to delete ('os' 'ip' 'all')
+    
+    -c COUNT, --count COUNT
+                        Number greater greater than or equal to 0 of versions to leave on target Org excluding Activated Version
+
 ```
 
 ## Exampple
-```sh
-python vlocity-clean-versions -u username@salesforce.com -t all -c 4
+```commandline
+python vlocity-clean-versions -u username@salesforce.com -p TestQA123 -t AbCDFghiJ -d test -o all -c 4
 ```
 
-```sh
-python vlocity-clean-versions --user test.qa@salesforce.com --type ip --count 1
+```commandline
+python vlocity-clean-versions --username test.qa@salesforce.com --password TestQA123 --token AbCDFghiJ --object ip --count 1
 ```
 
 
