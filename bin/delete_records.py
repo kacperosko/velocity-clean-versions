@@ -1,7 +1,7 @@
 import os
 import sys
 
-from bin.bcolors import bcolors as clr
+from bin.printcolors import PrintColors as clr
 
 
 def delete(user=None):
@@ -17,7 +17,8 @@ def delete(user=None):
                 raise Exception("")
         except Exception as e:
             print(e)
-            print(clr.WARNING + ">> Error during deleting records" + clr.ENDC)
+            clr.print_error(">> Error during deleting records")
+            # print(clr.WARNING + ">> Error during deleting records" + clr.ENDC)
 
 
 if __name__ == "__main__":

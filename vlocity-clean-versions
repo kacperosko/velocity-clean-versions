@@ -4,7 +4,7 @@ import argparse
 import sys
 from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query, delete_records
 import os
-from bin.bcolors import bcolors as clr
+from bin.printcolors import PrintColors as clr
 
 
 def check_dir():
