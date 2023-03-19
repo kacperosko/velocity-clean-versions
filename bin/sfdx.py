@@ -7,7 +7,7 @@ from typing import overload
 
 import pandas.errors
 
-from _settings import TEMP_CSV_DIR, clr
+from bin._settings import TEMP_CSV_DIR, clr
 from simple_salesforce import Salesforce
 
 
@@ -37,8 +37,10 @@ class SalesforceCommands:
             clr.print_error(f">> {e}")
             sys.exit()
 
-    def get_bulk(self, query: str, s_object: str) -> pd_frame.DataFrame:
+    def get_bulk(self, query: str, s_object: str, file_name=None) -> pd_frame.DataFrame:
         clr.print_info(f">> Running bulk query for {s_object} object")
+        if file_name is None:
+            file_name = f"{s_object}_get_bulk.csv"
         try:
             fetch_results = self.sf.bulk.__getattr__(s_object).query(query, lazy_operation=True)
         except Exception as e:
@@ -54,7 +56,7 @@ class SalesforceCommands:
         else:
             clr.print_info(">> There is no records matching query")
 
-        df.to_csv(os.path.join(TEMP_CSV_DIR, f"{s_object}_get_bulk.csv"), index=False)
+        df.to_csv(os.path.join(TEMP_CSV_DIR, file_name), index=False)
 
         clr.print_success(f">> Query ended successful with {len(df.index)} rows")
         return df
@@ -108,7 +110,6 @@ class SalesforceCommands:
 
         clr.print_info(f">> Succesfully deleted {success} records, {failure} records failed")
         clr.print_success(">> Deleting ended succesful")
-
         return True
 
 

@@ -14,7 +14,6 @@ def leave_n_versions(df, n_rows):
         return None
     else:
         df.drop(df.index[0: n_rows], axis=0, inplace=True)
-
         return df[['Id']]
 
 
@@ -42,7 +41,7 @@ def reformat(count=None):
               f'\'count\' value must be greater than or equal to 0' + clr.ENDC)
         sys.exit()
 
-    omniprocess_df = get_file("omniprocess_records.csv")
+    omniprocess_df = get_file("Omniprocess_get_bulk.csv")
 
     for col in ['Name', 'Type', 'VersionNumber', 'IsActive']:
         if col not in omniprocess_df:
@@ -73,6 +72,8 @@ def reformat(count=None):
     global OMNIPROCESS_RECORDS_LEN
     OMNIPROCESS_RECORDS_LEN = len(result_df.index)
     print(clr.OKGREEN + f">> Analyse ended successfully ({OMNIPROCESS_RECORDS_LEN} verions to delete)" + clr.ENDC)
+
+    return result_df
 
 
 if __name__ == "__main__":
