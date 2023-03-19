@@ -65,7 +65,7 @@ python vlocity-clean-versions -h
 
 ```
 
-## Exampple
+## Example
 ```commandline
 python vlocity-clean-versions -u username@salesforce.com -p TestQA123 -t AbCDFghiJ -d test -o all -c 4
 ```
