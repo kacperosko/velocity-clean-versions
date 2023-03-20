@@ -1,7 +1,8 @@
 import pandas as pd
 import sys
 import os
-from bin.printcolors import PrintColors as clr
+from bin._settings import clr
+
 
 OMNIPROCESS_RECORDS_LEN = None
 
@@ -21,7 +22,7 @@ def get_file(file_name):
     try:
         omniprocess = pd.read_csv("./bin/temp/" + file_name)
     except FileNotFoundError:
-        print(clr.FAIL + f'There is no file \'/temp/{file_name}\' with Omniprocess records\n' + clr.ENDC)
+        clr.print_error(f'There is no file \'/temp/{file_name}\' with Omniprocess records\n')
         sys.exit()
 
     return omniprocess
@@ -32,27 +33,24 @@ def reformat(count=None):
     try:
         N_VERSIONS_TO_LEAVE = int(count)
     except ValueError:
-        print(clr.FAIL +
-              f' \'count\' value must be a number greater than or equal to 0' + clr.ENDC)
-        sys.exit()
+        clr.print_error(f'>> \'count\' value must be a number greater than or equal to 0')
+        return None
 
     if N_VERSIONS_TO_LEAVE < 0:
-        print(clr.FAIL +
-              f'\'count\' value must be greater than or equal to 0' + clr.ENDC)
-        sys.exit()
+        clr.print_error(f'>> \'count\' value must be greater than or equal to 0')
+        return None
 
     omniprocess_df = get_file("Omniprocess_get_bulk.csv")
 
     for col in ['Name', 'Type', 'VersionNumber', 'IsActive']:
         if col not in omniprocess_df:
-            sys.stderr.write(
-                f'There is no column \'{col}\' in file \'/temp/omniprocess_records.csv\' with Omniprocess records\n')
-            sys.exit()
+            clr.print_error(
+                f'>> There is no column \'{col}\' in file \'/temp/omniprocess_records.csv\' with Omniprocess records\n')
+            return None
 
     if len(omniprocess_df.index) == 0:
-        print(clr.FAIL +
-              f'There\'s no OmniProcess records' + clr.ENDC)
-        sys.exit()
+        clr.print_error(f'>> There\'s no OmniProcess records')
+        return None
 
     omniprocess_df['Name'] = omniprocess_df['Type'] + omniprocess_df['Name']
 
@@ -71,10 +69,10 @@ def reformat(count=None):
 
     global OMNIPROCESS_RECORDS_LEN
     OMNIPROCESS_RECORDS_LEN = len(result_df.index)
-    print(clr.OKGREEN + f">> Analyse ended successfully ({OMNIPROCESS_RECORDS_LEN} verions to delete)" + clr.ENDC)
+    clr.print_success(f">> Analyse ended successfully ({OMNIPROCESS_RECORDS_LEN} verions to delete)")
 
     return result_df
 
 
 if __name__ == "__main__":
-    reformat({'count': "1"})
+    reformat()

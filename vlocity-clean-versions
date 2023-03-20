@@ -4,9 +4,9 @@ import argparse
 import sys
 from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query, delete_records
 import os
-from bin.printcolors import PrintColors as clr
+from bin._settings import clr
 from bin.sfdx import SalesforceCommands
-from bin.versions import get_vlocity_versions, delete_vlocity_versions
+from bin.versions import get_omniprocesses, get_omniprocesselements, delete_omniprocesselements, delete_omniprocesses
 
 
 def check_dir():
@@ -64,18 +64,12 @@ def main():
     sf = SalesforceCommands(username=args['username'], password=args['password'], security_token=args['token'],
                             domain=args['domain'])
 
-    get_vlocity_versions(sf=sf, element_type=args['object'], count=args['count'])
-    # delete_vlocity_versions(sf=sf)
-    # get_omniprocesses.retrieve_data(user=args['user'], element_type=args['type'])  # get omniprocess records from target Org
-    # reformat_csv_result.reformat(count=args['count'])  # analyse which versions leave to delete
-    if reformat_csv_result.OMNIPROCESS_RECORDS_LEN > 0:
-        delete_vlocity_versions(sf=sf)
-    #     get_omnielements.retrieve_data(user=args['user'])  # get omniprocesselements records from target Org
-    #     delete_records.delete(user=args['user'])  # delete records from csv files with IDs
-    else:
-        print(clr.OKBLUE + ">> No versions to delete" + clr.ENDC)
-    #
-    print(clr.OKGREEN + ">> Deleting Versions from Org ended successful" + clr.ENDC)
+    omniprocesses_df = get_omniprocesses(sf=sf, element_type=args['object'], count=args['count'])  # get omniprocess records from target Org
+    delete_omniprocesses(sf=sf)
+    get_omniprocesselements(sf=sf, dataframe=omniprocesses_df)
+    delete_omniprocesselements(sf=sf)
+
+    clr.print_success(">> Deleting Versions from Org ended successful")
 
 
 if __name__ == '__main__':

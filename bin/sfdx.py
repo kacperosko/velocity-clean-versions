@@ -48,18 +48,18 @@ class SalesforceCommands:
             return None
 
         data = []
-        df = pd.DataFrame()
+        result_df = pd.DataFrame()
         for list_results in fetch_results:
             data.extend(list_results)
         if len(data) > 0:
-            df = pd.DataFrame.from_records(data).drop('attributes', axis=1)
+            result_df = pd.DataFrame.from_records(data).drop('attributes', axis=1)
         else:
             clr.print_info(">> There is no records matching query")
 
-        df.to_csv(os.path.join(TEMP_CSV_DIR, file_name), index=False)
+        result_df.to_csv(os.path.join(TEMP_CSV_DIR, file_name), index=False)
 
-        clr.print_success(f">> Query ended successful with {len(df.index)} rows")
-        return df
+        clr.print_success(f">> Query ended successful with {len(result_df.index)} rows")
+        return result_df
 
     def delete_bulk(self, s_object: str, dataframe: pd_frame.DataFrame = None, path: str = "generate_from_temp",
                     batch_size: int = 10000, use_serial: bool = True) -> bool:
@@ -95,6 +95,10 @@ class SalesforceCommands:
         data = dataframe[['Id']].to_dict('records')
         clr.print_info(f">> {len(data)} records prepared to delete")
 
+        if len(data) == 0:
+            clr.print_info(f">> No {s_object} records to delete")
+            return False
+
         try:
             result = self.sf.bulk.__getattr__(s_object).delete(data, batch_size=batch_size, use_serial=use_serial)
         except Exception as e:
@@ -115,11 +119,10 @@ class SalesforceCommands:
 
 if __name__ == '__main__':
     sf = SalesforceCommands(
-        username='katarzyna.rutkowska@enxooddfaprod.com.devkaosk',
-        password='nLSWaBiDuZIVcL24qsvm',
-        security_token='O5FwHw3jPwFHEdePKfiZ5GMN',
-        domain="test"
+        username='',
+        password='',
+        security_token='',
+        domain=''
     )
-    df = sf.get_bulk(query="SELECT Id, Name FROM Account WHERE Id ='0013H00000lUXOyQAO'", s_object="Account")
+    df = sf.get_bulk(query="SELECT Id, Name FROM Account WHERE Id =''", s_object="Account")
     sf.delete_bulk(s_object="Account")
-    # sf.get_bulk(query="SELECT Id, Name FROM OmniProcess", s_object="OmniProcess")
