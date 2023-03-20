@@ -7,7 +7,7 @@ from typing import overload
 
 import pandas.errors
 
-from bin._settings import TEMP_CSV_DIR, clr
+from bin.settings import TEMP_CSV_DIR, clr
 from simple_salesforce import Salesforce
 
 
