@@ -2,7 +2,6 @@
 
 import argparse
 import sys
-from bin.versions import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query, delete_records
 import os
 from bin.settings import clr
 from bin.sfdx import SalesforceCommands
@@ -62,12 +61,12 @@ def main():
     check_dir()  # check directory where csv results will be saved
 
     sf = SalesforceCommands(username=args['username'], password=args['password'], security_token=args['token'],
-                            domain=args['domain'])
+                            domain=args['domain'])  # authorize an Salesforce Org
 
     omniprocesses_df = get_omniprocesses(sf=sf, element_type=args['object'], count=args['count'])  # get omniprocess records from target Org
-    delete_omniprocesses(sf=sf)
-    get_omniprocesselements(sf=sf, dataframe=omniprocesses_df)
-    delete_omniprocesselements(sf=sf)
+    delete_omniprocesses(sf=sf)  # delete retrieved records
+    get_omniprocesselements(sf=sf, dataframe=omniprocesses_df)  # get omniprocesselements records from target Org
+    delete_omniprocesselements(sf=sf)  # delete retrieved records
 
     clr.print_success(">> Deleting Versions from Org ended successful")
 
