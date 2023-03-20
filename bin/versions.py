@@ -3,9 +3,8 @@ import sys
 
 import simple_salesforce
 import bin.sfdx
-from bin._settings import clr, TEMP_CSV_DIR
+from bin.settings import clr, TEMP_CSV_DIR
 from bin.reformat_csv_result import reformat
-
 
 
 def get_omniprocesselements(sf, dataframe):

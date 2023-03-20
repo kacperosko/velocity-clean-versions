@@ -1,7 +1,7 @@
 import pandas as pd
 import sys
 import os
-from bin._settings import clr
+from bin.settings import clr
 
 
 OMNIPROCESS_RECORDS_LEN = None
