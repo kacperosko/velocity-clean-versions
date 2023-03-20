@@ -61,7 +61,7 @@ python vlocity-clean-versions -h
                         Which objects to delete ('os' 'ip' 'all')
     
     -c COUNT, --count COUNT
-                        Number greater greater than or equal to 0 of versions to leave on target Org excluding Activated Version
+                        Number greater than or equal to 0 of versions to leave on target Org excluding Activated Version
 
 ```
 
