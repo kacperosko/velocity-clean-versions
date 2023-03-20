@@ -4,7 +4,9 @@ import argparse
 import sys
 from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query, delete_records
 import os
-from bin.printcolors import PrintColors as clr
+from bin._settings import clr
+from bin.sfdx import SalesforceCommands
+from bin.versions import get_omniprocesses, get_omniprocesselements, delete_omniprocesselements, delete_omniprocesses
 
 
 def check_dir():
@@ -18,12 +20,21 @@ def add_args():
         description='Clean unused versions from Org and keep -n only',
     )
 
-    parser.add_argument("-u", "--user",
-                        help="Target Org username or sfdx alias authorized on computer",
+    parser.add_argument("-u", "--username",
+                        help="Username the user you want to log in to the selected Org",
                         required=True)
-    parser.add_argument("-t", "--type",
+    parser.add_argument("-p", "--password",
+                        help="Password the user you want to log in to the selected Org",
+                        required=True)
+    parser.add_argument("-t", "--token",
+                        help="Security Token of the user you want to log in with",
+                        required=True)
+    parser.add_argument("-d", "--domain",
+                        help="Domain of selected Org. Provide 'test' if You try to log in to sandbox",
+                        required=False)
+    parser.add_argument("-o", "--object",
                         choices=['os', 'ip', 'all'],
-                        help="Which element's versions to delete (\'os\' \'ip\' \'all\')",
+                        help="Which objects to delete (\'os\' \'ip\' \'all\')",
                         required=True)
     parser.add_argument("-c", "--count",
                         help="Number greater greater than or equal to 0 of versions to leave on target Org excluding Activated Version",
@@ -35,8 +46,11 @@ def add_args():
 def get_args(parser):
     result_args = {}
     args = parser.parse_args()
-    result_args['user'] = args.user
-    result_args['type'] = args.type
+    result_args['username'] = args.username
+    result_args['password'] = args.password
+    result_args['token'] = args.token
+    result_args['domain'] = args.domain
+    result_args['object'] = args.object
     result_args['count'] = args.count
 
     return result_args
@@ -47,15 +61,15 @@ def main():
     args = get_args(parser)  # get arguments from user command input
     check_dir()  # check directory where csv results will be saved
 
-    get_omniprocesses.retrieve_data(user=args['user'], element_type=args['type'])  # get omniprocess records from target Org
-    reformat_csv_result.reformat(count=args['count'])  # analyse which versions leave to delete
-    if reformat_csv_result.OMNIPROCESS_RECORDS_LEN > 0:
-        get_omnielements.retrieve_data(user=args['user'])  # get omniprocesselements records from target Org
-        delete_records.delete(user=args['user'])  # delete records from csv files with IDs
-    else:
-        print(clr.OKBLUE + ">> No versions to delete" + clr.ENDC)
+    sf = SalesforceCommands(username=args['username'], password=args['password'], security_token=args['token'],
+                            domain=args['domain'])
 
-    print(clr.OKGREEN + ">> Deleting Versions from Org ended successful" + clr.ENDC)
+    omniprocesses_df = get_omniprocesses(sf=sf, element_type=args['object'], count=args['count'])  # get omniprocess records from target Org
+    delete_omniprocesses(sf=sf)
+    get_omniprocesselements(sf=sf, dataframe=omniprocesses_df)
+    delete_omniprocesselements(sf=sf)
+
+    clr.print_success(">> Deleting Versions from Org ended successful")
 
 
 if __name__ == '__main__':

@@ -20,3 +20,6 @@ class PrintColors:
 
     def print_info(self, *args, sep=" ") -> None:
         self.__print_color(self.OKBLUE, sep.join(args))
+
+    def print_line(self) -> None:
+        self.__print_color(self.OKCYAN, "<<<<<<:>~")

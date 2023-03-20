@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from printcolors import PrintColors
+from bin.printcolors import PrintColors
 
 
 # Create an instance of PrintColors to call print methods inside
