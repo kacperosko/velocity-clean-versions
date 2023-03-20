@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from bin import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query, delete_records
+from bin.versions import get_omniprocesses, get_omnielements, reformat_csv_result, run_sf_query, delete_records
 import os
 from bin.settings import clr
 from bin.sfdx import SalesforceCommands
