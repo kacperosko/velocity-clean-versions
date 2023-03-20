@@ -36,7 +36,7 @@ def add_args():
                         help="Which objects to delete (\'os\' \'ip\' \'all\')",
                         required=True)
     parser.add_argument("-c", "--count",
-                        help="Number greater greater than or equal to 0 of versions to leave on target Org excluding Activated Version",
+                        help="Number greater than or equal to 0 of versions to leave on target Org excluding Activated Version",
                         required=True)
 
     return parser
