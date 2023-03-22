@@ -14,8 +14,6 @@ This is unofficial module to clean Omniscripts and Integration Procedures versio
 **Vlocity Versions Clean** is using:
 
 - Python 3.10
-- [Salesforce CLI >= 7.188.1](https://developer.salesforce.com/tools/sfdxcli)
-- Authorized Org
 
 
 ## Installation
