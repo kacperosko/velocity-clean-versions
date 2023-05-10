@@ -24,13 +24,24 @@ def add_args():
                         required=True)
     parser.add_argument("-p", "--password",
                         help="Password the user you want to log in to the selected Org",
-                        required=True)
+                        required=False,
+                        default=None)
+    parser.add_argument("-ck", "--consumerkey",
+                        help="Password the user you want to log in to the selected Org",
+                        required=False,
+                        default=None)
+    parser.add_argument("-pk", "--privatekeyfile",
+                        help="Password the user you want to log in to the selected Org",
+                        required=False,
+                        default=None)
     parser.add_argument("-t", "--token",
                         help="Security Token of the user you want to log in with",
-                        required=True)
+                        required=False,
+                        default=None)
     parser.add_argument("-d", "--domain",
                         help="Domain of selected Org. Provide 'test' if You try to log in to sandbox",
-                        required=False)
+                        required=False,
+                        default=None)
     parser.add_argument("-o", "--object",
                         choices=['os', 'ip', 'all'],
                         help="Which objects to delete (\'os\' \'ip\' \'all\')",
@@ -47,6 +58,8 @@ def get_args(parser):
     args = parser.parse_args()
     result_args['username'] = args.username
     result_args['password'] = args.password
+    result_args['consumerkey'] = args.consumerkey
+    result_args['privatekeyfile'] = args.privatekeyfile
     result_args['token'] = args.token
     result_args['domain'] = args.domain
     result_args['object'] = args.object
@@ -61,7 +74,7 @@ def main():
     check_dir()  # check directory where csv results will be saved
 
     sf = SalesforceCommands(username=args['username'], password=args['password'], security_token=args['token'],
-                            domain=args['domain'])  # authorize an Salesforce Org
+                            domain=args['domain'], consumer_key=args['consumerkey'], privatekey_file=args['privatekeyfile'])  # authorize an Salesforce Org
 
     omniprocesses_df = get_omniprocesses(sf=sf, element_type=args['object'], count=args['count'])  # get omniprocess records from target Org
     delete_omniprocesses(sf=sf)  # delete retrieved records
