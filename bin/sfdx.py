@@ -13,7 +13,7 @@ from simple_salesforce import Salesforce
 
 class SalesforceCommands:
 
-    def __init__(self, username: str, password: str, security_token: str, domain: str = None):
+    def __init__(self, username: str, password: str, security_token: str, domain: str = None, consumer_key: str = None, privatekey_file: str = None):
         """
         Provide login credentials to the Org that You want to authorize. Domain is optional, but
         You have to provide 'test' if You want to authorize sandbox Org.
@@ -22,6 +22,8 @@ class SalesforceCommands:
         :param password:
         :param security_token:
         :param domain:
+        :param consumer_key:
+        :param privatekey_file:
         """
         try:
             clr.print_info(f">> Authorizing an Org {username}")
@@ -30,6 +32,8 @@ class SalesforceCommands:
                 password=password,
                 security_token=security_token,
                 domain=domain if domain else None,
+                consumer_key=consumer_key,
+                privatekey_file=privatekey_file
             )
             clr.print_success(">> Org authorized successful")
         except Exception as e:
